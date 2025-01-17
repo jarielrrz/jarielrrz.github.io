@@ -789,6 +789,21 @@
     .project-symbol.dark-mode {
         color: #66b2ff; /* Dark mode color */
     }
+
+    .back-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 24px;
+        color: #007bff;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    .back-button.dark-mode {
+        color: #e0e0e0;
+    }
 </style>
 <body>
     <div class="profile-container">
@@ -1138,6 +1153,9 @@
                     <div class="project-title">${project.title}</div>
                     <div class="project-description">${project.description}</div>
                 `;
+                projectBox.addEventListener('click', () => {
+                    loadProjectDetails(project);
+                });
                 projectsContainer.appendChild(projectBox);
             });
 
@@ -1169,6 +1187,26 @@
             });
             document.querySelector(`.filter-button[onclick="filterProjects('${category}')"]`).classList.add('active');
             loadProjects();
+        }
+
+        function loadProjectDetails(project) {
+            const content = `
+                <div class="project-details">
+                    <button class="back-button" onclick="loadContent('projects')"><i class="fas fa-arrow-left"></i></button>
+                    <h2>${project.title}</h2>
+                    <img src="${project.image}" alt="${project.title}" class="project-image">
+                    <p>${project.description}</p>
+                </div>
+            `;
+            contentSection.innerHTML = content + '<div class="close-button" onclick="closeContent()">✖</div>';
+            contentSection.classList.add('active'); // Ensure content section is also shown
+
+            // Apply dark mode styles if necessary
+            if (document.body.classList.contains('dark-mode')) {
+                document.querySelectorAll('.project-details, .back-button').forEach(element => {
+                    element.classList.add('dark-mode');
+                });
+            }
         }
     </script>
 </body>
