@@ -602,6 +602,7 @@
 
     /* Dark mode styles */
     /* ...existing code... */
+    
 
     .contact-section.dark-mode {
         background-color: #333;
@@ -836,7 +837,6 @@
 
     <script>
         // Accessibility: Open menu on click as well as hover
-        // Accessibility: Open menu on click as well as hover
         const profilePic = document.querySelector('.profile-pic');
         const menu = document.querySelector('.menu'); 
         const profileInfo = document.querySelector('.profile-info');
@@ -859,14 +859,14 @@
             toggleMenu();
         });
 
-        profilePic.addEventListener('blur', () => {
-            closeMenu();
-        });
-
         document.addEventListener('click', (event) => {
-            if (!profilePic.contains(event.target) && !menu.contains(event.target) && !event.target.closest('.menu-item')) {
+            if (!profilePic.contains(event.target) && !menu.contains(event.target) && !contentContainer.contains(event.target)) {
                 closeMenu();
             }
+        });
+
+        contentContainer.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent the menu from closing when clicking inside the content container
         });
 
         document.querySelectorAll('.menu-item').forEach(item => {
